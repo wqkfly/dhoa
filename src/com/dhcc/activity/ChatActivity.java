@@ -311,6 +311,8 @@ public class ChatActivity extends MyActivity implements OnClickListener{
 			
 			//以接受人的名字建表，将聊天内容保存
 			messageDB.saveMsg(user.getName(),entity);
+			//同时自己也需要保存一份
+			messageDB.saveMsg(util.getName(),entity);
 			//将聊天内容保存到集合中
 			chatArray.add(entity);
 		

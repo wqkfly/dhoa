@@ -53,20 +53,20 @@ public class MessageDB {
 		db.execSQL("CREATE table IF NOT EXISTS "
 				+ name+"_list"
 				+ " (_id INTEGER PRIMARY KEY AUTOINCREMENT,fromUser TEXT,counts INTEGER, date TEXT,isRead INTEGER,lastContent TEXT)");
-		Cursor c = db.rawQuery("SELECT * from " + name+"_list"+ " ORDER BY _id DESC LIMIT 5", null);
+		Cursor c = db.rawQuery("SELECT * from " + name+"_list"+ " ORDER BY _id DESC LIMIT 10", null);
 		while (c.moveToNext()) {
 			String fromUser = c.getString(c.getColumnIndex("fromUser"));
 			int counts = c.getInt(c.getColumnIndex("counts"));
 			String date = c.getString(c.getColumnIndex("date"));
 			int isRead = c.getInt(c.getColumnIndex("isRead"));
 			String lastContent = c.getString(c.getColumnIndex("lastContent"));
-			MesList entity=new MesList(fromUser,counts,date,isRead,lastContent);
+			MesList mesList=new MesList(fromUser,counts,date,isRead,lastContent);
 			
 			List<ChatMsgEntity> chats= getMsg(name);
 			
-			entity.setContents(chats);
+			mesList.setContents(chats);
 			//ChatMsgEntity entity = new ChatMsgEntity(name, date, message, img,isComMsg);
-			list.add(entity);
+			list.add(mesList);
 		}
 		c.close();
 		return list;
@@ -123,7 +123,9 @@ public class MessageDB {
 			db.close();
 	}
 
-
+	public void upDateMesList(String name,String fromUser){
+		db.execSQL("update "+name+"_list set counts = 0 where fromUser = ?", new String[]{fromUser});
+	};
 
 	public List<String> getTableNames() {
 		List<String> tableNames=new ArrayList<String>();

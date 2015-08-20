@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.json.JSONArray;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -44,6 +45,14 @@ public class NewsActivity extends Fragment {
 	private int a_height;
 	private Context context;
 	private MessageDB messageDB;
+	
+	@Override
+	public void onAttach(Activity activity){
+		// TODO Auto-generated method stub
+		super.onAttach(activity);
+		mesList=LoginActivity.getUnReadMessages();
+	}
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View  contentView=  inflater.inflate(R.layout.activity_news,container,false);
@@ -77,8 +86,11 @@ public class NewsActivity extends Fragment {
 				user.setName(mesList.get(position).getFromUser());
 				startChat.putExtra("person",user);
 			    startChat.putExtra("mesList",mesList.get(position));
-			    mesList.get(position).setCounts(0);
+			    // mesList.get(position).setCounts(0);
+			    messageDB.upDateMesList(util.getName(),mesList.get(position).getFromUser());
 				context.startActivity(startChat);
+				
+				mesList=null;
 				Toast.makeText(context, "点击事件", 0).show();
 				
 			}
@@ -87,8 +99,6 @@ public class NewsActivity extends Fragment {
 	private void initview() {
 		// TODO Auto-generated method stub
 		//emps=new ArrayList<Mes>();
-		mesList=LoginActivity.getUnReadMessages();
-	
 		
 		if(mesList==null){
 			getMesListFromSqlite();
@@ -101,16 +111,13 @@ public class NewsActivity extends Fragment {
 				//ChatMsgEntity entity=new ChatMsgEntity();
 				for (ChatMsgEntity entity : contents) {
 					if(!entity.isRead()){
-						
-						//未读消息查看后，存入本地数据库
-						
+					//未读消息查看后，存入本地数据库
 						messageDB.saveMsg(util.getName(), entity);
 					}
 				}
 				
 			}
-			
-		
+	
 			mesList=null;
 			getMesListFromSqlite();
 		}
@@ -151,7 +158,7 @@ public class NewsActivity extends Fragment {
 			newsAdapter=new NewsListViewAdapter(this.getActivity(),mesList,mImageDownLoader,listview);
 			newsAdapter.HeadHeight=height;
 			listview.setAdapter(newsAdapter);
-		
+			
 		
 	}
 	private void getMesListFromSqlite() {
