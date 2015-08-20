@@ -195,9 +195,9 @@ public class ChatActivity extends MyActivity implements OnClickListener{
 				if(entity.getFromUser().equals("")){
 					entity.setFromUser(user.getName());
 				}
-				if(entity.getImg()==null){
+				/*if(entity.getImg()==null){
 					entity.setImg(user.getIcon());
-				}
+				}*/
 				chatArray.add(entity);
 			}
 			Collections.reverse(chatArray);
@@ -306,7 +306,7 @@ public class ChatActivity extends MyActivity implements OnClickListener{
 			entity.setFromUser(util.getName());
 			entity.setDate(MyDate.getDateEN());
 			entity.setMessage(content);
-			entity.setImg(util.getImg());
+			//entity.setImg(util.getImg());
 			entity.setMsgType(false);
 			
 			//以接受人的名字建表，将聊天内容保存

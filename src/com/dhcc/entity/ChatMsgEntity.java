@@ -14,22 +14,24 @@ public class ChatMsgEntity implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	private String fromUser;// 消息来自
+	private String toUser;
 	private String date;// 消息日期
 	private String message;// 消息内容
-	private String img;
+	//private String img;
 	private boolean isComMeg = true;// 是否为收到的消息
 	private boolean isRead;
+	private int type;//1,普通文本消息，2，图片3，语音，4，视频
 	public ChatMsgEntity() {
 
 	}
 
-	public ChatMsgEntity(String fromUser, String date, String text, String img,
+	public ChatMsgEntity(String fromUser,String toUser, String date, String text, 
 			boolean isComMsg) {
 		super();
 		this.fromUser = fromUser;
 		this.date = date;
 		this.message = text;
-		this.img = img;
+		this.toUser=toUser;
 		this.isComMeg = isComMsg;
 	}
 
@@ -66,12 +68,22 @@ public class ChatMsgEntity implements Serializable{
 		isComMeg = isComMsg;
 	}
 
-	public String getImg() {
-		return img;
+	
+
+	public String getToUser() {
+		return toUser;
 	}
 
-	public void setImg(String img) {
-		this.img = img;
+	public void setToUser(String toUser) {
+		this.toUser = toUser;
+	}
+
+	public int getType() {
+		return type;
+	}
+
+	public void setType(int type) {
+		this.type = type;
 	}
 
 	public boolean isRead() {

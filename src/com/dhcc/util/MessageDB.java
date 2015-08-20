@@ -18,7 +18,7 @@ public class MessageDB {
 		db = context.openOrCreateDatabase(Constants.DBNAME,Context.MODE_PRIVATE, null);
 	}
 
-	public void saveMsg(String name, ChatMsgEntity entity) {
+	public void saveMsg(String name, ChatMsgEntity entity) {//数据表以 from_to样式命名
 		db.execSQL("CREATE table IF NOT EXISTS "
 				+ name
 				+ " (_id INTEGER PRIMARY KEY AUTOINCREMENT,name TEXT, img TEXT,date TEXT,isCome TEXT,message TEXT)");
@@ -29,7 +29,7 @@ public class MessageDB {
 		db.execSQL(
 				"insert into " + name
 						+ " (name,img,date,isCome,message) values(?,?,?,?,?)",
-						new Object[] { entity.getFromUser(), entity.getImg(),
+						new Object[] { entity.getFromUser(),
 						entity.getDate(), isCome, entity.getMessage() });
 	}
 	public void saveNesList(String name, List<MesList> meslist) {
