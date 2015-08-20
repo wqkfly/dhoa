@@ -1,0 +1,47 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ProductActivity" 
+    android:orientation="vertical"
+    android:background="#ffffffff"
+    >
+
+    
+    	<RelativeLayout    
+    android:layout_width="fill_parent"  
+    android:layout_height="55dp"
+    android:background="#82d3f2"
+    >  
+    <ImageView  
+        android:id="@+id/p_title_theme"     
+        android:layout_width="38dp"
+        android:layout_height="38dp"     
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"  
+        android:layout_marginLeft="17.5dp"  
+        android:src="@drawable/menu_n"/>     
+    <TextView  
+        android:id="@+id/p_title_text"     
+        android:layout_width="wrap_content"  
+        android:layout_height="wrap_content"     
+        android:layout_centerInParent="true"  
+        android:textSize="25sp"   
+        android:textColor="#ffffffff"  
+        android:textStyle="bold"
+        android:text="@string/title_activity_product"/>     
+</RelativeLayout>
+    
+    <TextView
+        android:id="@+id/p_edit"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        />
+    <ImageView 
+        android:id="@+id/p_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        />
+
+</LinearLayout>

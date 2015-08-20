@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RelativeLayout 
+     xmlns:android="http://schemas.android.com/apk/res/android"
+     android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#FFFFFF"
+    android:id="@+id/choice_activity"
+    >
+
+<LinearLayout
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" 
+    android:background="#FFFFFF"
+    > 
+       
+    <!--自定义试图上面的xmlns需要指向R.java所在的文件夹--> 
+    <!--  
+	<com.dhcc.commen.GifView 
+        android:id="@+id/image_view" 
+        android:layout_width="wrap_content" 
+        android:layout_height="wrap_content" 
+        android:src="@drawable/moving" 
+        my:auto_play="true"
+        /> -->
+     <!-- title -->
+	<RelativeLayout  
+	android:id="@+id/choice_title_layout"  
+    android:layout_width="fill_parent"  
+    android:layout_height="55dp"
+    android:background="#82d3f2"
+    >  
+    <ImageView  
+        android:id="@+id/choice_title_back"     
+        android:layout_width="38dp"
+        android:layout_height="38dp"     
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true" 
+        android:layout_marginLeft="17.5dp"  
+        android:background="@drawable/back_a"/>
+    <TextView  
+        android:id="@+id/choice_title_theme"     
+        android:layout_width="60dp"
+        android:layout_height="40dp"     
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"  
+        android:layout_marginRight="17.5dp" 
+        android:textSize="15sp"   
+        android:textColor="#ffffff"  
+        android:textStyle="bold"
+        android:text="确认"
+        android:gravity="center"
+        android:background="@drawable/shape_choice_button"/>     
+    <TextView  
+        android:id="@+id/choice_title_text"     
+        android:layout_width="wrap_content"  
+        android:layout_height="wrap_content"     
+        android:layout_centerInParent="true"  
+        android:textSize="25sp"   
+        android:textColor="#ffffffff"  
+        android:textStyle="bold"
+        android:text="@string/title_activity_choice"/>     
+	</RelativeLayout>
+	</LinearLayout>
+</RelativeLayout>
+

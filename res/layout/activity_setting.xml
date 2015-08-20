@@ -1,0 +1,72 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SettingActivity" 
+    android:orientation="vertical"
+    >
+    <RelativeLayout    
+   	 android:layout_width="fill_parent"  
+   	 android:layout_height="55dp"
+   	 android:background="#82d3f2"
+    >  
+    <ImageView  
+        android:id="@+id/f_title_theme"     
+        android:layout_width="38dp"
+        android:layout_height="38dp"     
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"  
+        android:layout_marginLeft="17.5dp"  
+        android:src="@drawable/menu_n"/>     
+    <TextView  
+        android:id="@+id/contact_title_text"     
+        android:layout_width="wrap_content"  
+        android:layout_height="wrap_content"     
+        android:layout_centerInParent="true"  
+        android:textSize="25sp"   
+        android:textColor="#ffffffff"  
+        android:textStyle="bold"
+        android:text="@string/title_activity_setting"/>     
+</RelativeLayout>
+    
+
+    <LinearLayout 
+		     android:background="#ffffffff"
+		     android:id="@+id/h_layout"
+		     android:layout_width="fill_parent"
+		     android:layout_height="fill_parent"
+		     android:orientation="vertical"
+		     >
+		  <TextView 
+		      android:layout_width="fill_parent"
+		      android:layout_height="wrap_content"
+		      android:text="工作：1、搞定联系人界面返回显示相应问题，2。登录界面菜单点击网络设置，3.完成group界面左侧按钮的部分功能"
+		      android:textColor="#000000"
+		      android:textSize="18sp"
+		      />
+		  <TextView 
+		      android:layout_width="fill_parent"
+		      android:layout_height="wrap_content"
+		      android:text="问题：1.通讯录界面还有列表的滚动条需要修改样式;2.感觉地图跳转后的按钮没有必要"
+		      android:textColor="#000000"
+		      android:background="#CCCCCC"
+		      android:textSize="18sp"
+		      />
+		  <TextView 
+		      android:layout_width="fill_parent"
+		      android:layout_height="wrap_content"
+		      android:text="明天：完成label返回图片的显示以及隐藏。不知道组和地图左侧按钮的具体要求，还请告知。如果时间还有就写后台了（登录、ip记录、列表数据获取等）"
+		      android:textColor="#000000"
+		      android:textSize="18sp"
+		      />
+		  <TextView 
+		      android:id="@+id/s_loginuser_t"
+		      android:layout_width="fill_parent"
+		      android:layout_height="wrap_content"
+		      android:textColor="#000000"
+		      android:textSize="18sp"
+		      />
+      </LinearLayout>
+
+
+</LinearLayout>

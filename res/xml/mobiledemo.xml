@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+    <EditTextPreference 
+        android:dialogTitle="网络连接地址" 
+        android:summary="web地址" 
+        android:key="@string/webAddress" 
+        android:title="网络连接地址" 
+        android:defaultValue="http://10.1.20.63:8080/dhoa/"/>
+    
+
+</PreferenceScreen>
