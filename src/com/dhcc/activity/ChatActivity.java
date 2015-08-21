@@ -85,7 +85,7 @@ public class ChatActivity extends MyActivity implements OnClickListener{
 	private List<View> views = new ArrayList<View>();
 	private MyEditText input;
 	private User user;
-
+	private SharePreferenceUtil util_count;
 	private SharePreferenceUtil util;
 	private String content="";
 	private List<String> staticFacesList;
@@ -107,7 +107,7 @@ public class ChatActivity extends MyActivity implements OnClickListener{
 		application = (MyApplication) getApplicationContext();
 		messageDB = new MessageDB(this);
 		util = new SharePreferenceUtil(this, Constants.SAVE_USER);
-		
+		util_count = new SharePreferenceUtil(this, Constants.COUNTS);
 		user=(User) getIntent().getSerializableExtra("person");
 		mesList=(MesList) getIntent().getSerializableExtra("mesList");
 		
@@ -166,28 +166,9 @@ public class ChatActivity extends MyActivity implements OnClickListener{
 
 	private void initData(){
 		
-		/*if(mesList!=null){
-			for( ChatMsgEntity entity :mesList.getContents()){
-				
-				ChatMsgEntity entity=new ChatMsgEntity();
-				
-				if(mes.getIsRead()==0){
-					entity.setDate(mes.getTime());
-					entity.setMessage(mes.getContent());
-					entity.setMsgType(true);
-					entity.setName(mesList.getFromUser());
-					entity.setRead(true);
-					mes.setIsRead(1);
-					//未读消息查看后，存入本地数据库
-					
-					messageDB.saveMsg(user.getName(), entity);
-				}
-				
-				
-			}
-		}*/
-		
-		List<ChatMsgEntity> list=messageDB.getMsg(util.getName());
+	
+		 util_count.setNum(user.getName()+"_"+util.getName(), 0);
+		List<ChatMsgEntity> list=messageDB.getMsg(user.getName()+"_"+util.getName());//from_to
 		
 		if(list.size()>0){
 			for(ChatMsgEntity entity :list){
@@ -200,7 +181,7 @@ public class ChatActivity extends MyActivity implements OnClickListener{
 				}*/
 				chatArray.add(entity);
 			}
-			Collections.reverse(chatArray);
+		Collections.reverse(chatArray);
 		}
 		
 		updataUnRead();
@@ -309,14 +290,13 @@ public class ChatActivity extends MyActivity implements OnClickListener{
 			//entity.setImg(util.getImg());
 			entity.setMsgType(false);
 			
-			//以接受人的名字建表，将聊天内容保存
-			messageDB.saveMsg(user.getName(),entity);
+			//messageDB.saveMsg(util.getName(),user.getName(),entity);
+			//接受者，发送者，实体类
+			messageDB.saveMsg(user.getName(),util.getName(),entity);
 			//同时自己也需要保存一份
-			messageDB.saveMsg(util.getName(),entity);
+			//messageDB.saveMsg(util.getName(),entity);
 			//将聊天内容保存到集合中
 			chatArray.add(entity);
-		
-			
 			mLvAdapter.notifyDataSetChanged();
 			mListView.setSelection(mLvAdapter.getCount() - 1);// 发送一条消息时，ListView显示选择最后一项
 			
@@ -429,11 +409,12 @@ public class ChatActivity extends MyActivity implements OnClickListener{
 		case MESSAGE:
 			TextMessage tm=(TextMessage) msg.getObject();
 			String message=tm.getMessage();
+			//String fromUser,String toUser, String date, String text, boolean isComMsg
 			ChatMsgEntity entity=new ChatMsgEntity(user.getName(),
-					MyDate.getDateEN(), message, user.getIcon(), true);
+					util.getName(), MyDate.getDateEN(), message, true);
 			
 			if(msg.getFromUser().equals(user.getName())){
-				messageDB.saveMsg(user.getName(), entity);
+				messageDB.saveMsg(user.getName(),util.getName(), entity);
 				chatArray.add(entity);
 				mLvAdapter.notifyDataSetChanged();
 				mListView.setSelection(mLvAdapter.getCount() - 1);
@@ -446,7 +427,7 @@ public class ChatActivity extends MyActivity implements OnClickListener{
 				MediaPlayer.create(this, R.raw.msg).start();
 				
 			}else{
-				messageDB.saveMsg(msg.getFromUser(), entity);// 保存到数据库
+				messageDB.saveMsg(msg.getFromUser(),util.getName(), entity);// 保存到数据库
 				Toast.makeText(ChatActivity.this,"您有来自"+msg.getFromUser()+ ": " + message, 0).show();// 其他好友的消息，就先提示，并保存到数据库
 				MediaPlayer.create(this, R.raw.msg).start();
 			}

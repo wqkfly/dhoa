@@ -69,18 +69,18 @@ public class GetMsgService extends Service {
 						.getData().getSerializable("msg");
 				// System.out.println(textObject);
 				if (textObject != null) {
-					String form = textObject.getFromUser();// 消息从哪里来
+					String from = textObject.getFromUser();// 消息从哪里来
 					String content = textObject.getObject().getMessage();// 消息内容
 
 					ChatMsgEntity entity = new ChatMsgEntity("",
 							MyDate.getDateEN(), content, "", true);// 收到的消息
-					messageDB.saveMsg(form, entity);// 保存到数据库
+				//	messageDB.saveMsg(from, entity);// 保存到数据库
 
 					// 更新通知栏
 					int icon = R.drawable.notify_newmessage;
-					CharSequence tickerText = form + ":" + content;
+				//	CharSequence tickerText = form + ":" + content;
 					long when = System.currentTimeMillis();
-					mNotification = new Notification(icon, tickerText, when);
+					//mNotification = new Notification(icon, tickerText, when);
 
 					mNotification.flags = Notification.FLAG_NO_CLEAR;
 					// 设置默认声音

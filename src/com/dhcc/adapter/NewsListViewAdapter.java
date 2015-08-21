@@ -13,13 +13,15 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.dhcc.activity.LoginActivity;
 import com.dhcc.activity.R;
 import com.dhcc.entity.LoginUser;
-
 import com.dhcc.entity.MesList;
+import com.dhcc.util.Constants;
 import com.dhcc.util.DoSharePre;
 import com.dhcc.util.GetBitmap;
 import com.dhcc.util.ImageDownLoader;
+import com.dhcc.util.SharePreferenceUtil;
 import com.dhcc.util.ImageDownLoader.onImageLoaderListener;
 
 
@@ -29,7 +31,7 @@ import com.dhcc.util.ImageDownLoader.onImageLoaderListener;
 public class NewsListViewAdapter extends BaseAdapter  {
 	private Context context;
 	private  List<MesList> Mess;
-
+	private SharePreferenceUtil util;
 	public int HeadHeight;
 	public boolean right_boolean=true;
 	private ImageDownLoader mImageDownLoader;
@@ -42,6 +44,7 @@ public class NewsListViewAdapter extends BaseAdapter  {
 		this.Mess=listItem;
 		mImageDownLoader=imageDownLoader;
 		this.listView=listView;
+		util= new SharePreferenceUtil(this.context, Constants.SAVE_USER);
 	}
 	public void setEmps( List<MesList> p){
 		
@@ -116,14 +119,12 @@ public class NewsListViewAdapter extends BaseAdapter  {
 		
 		final MesList mesList=Mess.get(position);
 		viewholder.name.setText(mesList.getCfromUser());
-		
-		if(mesList.getCounts()==0){
+		int num=mesList.getUnReadNums().get(mesList.getFromUser()+"_"+util.getName());
+		if(num==0){
 			viewholder.num.setVisibility(View.GONE);
 		}else{
-			viewholder.num.setText(String.valueOf(mesList.getCounts()));
+			viewholder.num.setText(String.valueOf(num));
 		}
-		
-		
 		viewholder.time.setText(mesList.getTime());
 		viewholder.mes.setText(mesList.getLastCotent());
 		

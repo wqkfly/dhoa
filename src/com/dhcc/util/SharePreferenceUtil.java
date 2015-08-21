@@ -189,4 +189,11 @@ public class SharePreferenceUtil {
 	public String getcName() {
 		return sp.getString("cname", "");
 	}
+	public void setNum(String key,int num){
+		editor.putInt(key, num);
+		editor.commit();
+	}
+	public int getNum(String key){
+		return sp.getInt(key, 0);
+	}
 }

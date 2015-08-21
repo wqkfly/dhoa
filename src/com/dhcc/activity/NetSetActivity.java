@@ -216,22 +216,14 @@ public class NetSetActivity extends Activity implements OnClickListener {
 			{
 				Toast.makeText(this, "地址输入不符合规范", 0).show();
 				
-			}else{saveNetParams();
-			Intent n=new Intent();
-			n.setClass(this, LoginActivity.class);
-			startActivity(n);
-			finish();}
+			}else{
+				saveNetParams();
+				finish();}
 			break;
 		case R.id.n_button_cancel:
-			Intent n1=new Intent();
-			n1.setClass(this, LoginActivity.class);
-			startActivity(n1);	
 			finish();
 			break;
 		case R.id.n_title_back:
-				Intent n2=new Intent();
-				n2.setClass(this, LoginActivity.class);
-				startActivity(n2);
 				finish();
 			break;
 		case R.id.n_content:

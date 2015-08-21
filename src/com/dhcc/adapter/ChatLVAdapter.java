@@ -80,6 +80,7 @@ public class ChatLVAdapter extends BaseAdapter{
 			hodler = (ViewHodler) convertView.getTag();
 		}
 		ChatMsgEntity entity = list.get(position);
+		
 		if (entity.getMsgType()) {
 			// 收到消息  from显示
 			hodler.toContainer.setVisibility(View.GONE);

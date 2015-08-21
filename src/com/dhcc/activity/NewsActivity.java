@@ -1,12 +1,9 @@
 package com.dhcc.activity;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import org.json.JSONArray;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -21,13 +18,11 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.dhcc.adapter.NewsListViewAdapter;
-import com.dhcc.entity.ChatMsgEntity;
 import com.dhcc.entity.MesList;
 import com.dhcc.entity.User;
 import com.dhcc.util.Constants;
 import com.dhcc.util.ImageDownLoader;
 import com.dhcc.util.MessageDB;
-import com.dhcc.util.MyDate;
 import com.dhcc.util.SharePreferenceUtil;
 
 /**
@@ -39,25 +34,21 @@ public class NewsActivity extends Fragment {
 	private NewsListViewAdapter newsAdapter;
 	private ImageDownLoader mImageDownLoader;
 	private List<MesList> mesList;
+	//private List<ChatMsgEntity> mesList;
 	private SharePreferenceUtil util;
+	private SharePreferenceUtil util_count;
 	private int height;
 	private int a_width;
 	private int a_height;
 	private Context context;
 	private MessageDB messageDB;
 	
-	@Override
-	public void onAttach(Activity activity){
-		// TODO Auto-generated method stub
-		super.onAttach(activity);
-		mesList=LoginActivity.getUnReadMessages();
-	}
+	
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View  contentView=  inflater.inflate(R.layout.activity_news,container,false);
-        
-        
+     
         return contentView;
     }
     @Override
@@ -68,6 +59,7 @@ public class NewsActivity extends Fragment {
 		mImageDownLoader=new ImageDownLoader(context);
 		listview=(ListView) getView().findViewById(R.id.news_listview);
 		util = new SharePreferenceUtil(this.getActivity(), Constants.SAVE_USER);
+		util_count = new SharePreferenceUtil(this.getActivity(), Constants.COUNTS);
 		getScreen();
 		initview();
 		setListener();
@@ -87,12 +79,12 @@ public class NewsActivity extends Fragment {
 				startChat.putExtra("person",user);
 			    startChat.putExtra("mesList",mesList.get(position));
 			    // mesList.get(position).setCounts(0);
-			    messageDB.upDateMesList(util.getName(),mesList.get(position).getFromUser());
+			    //messageDB.upDateMesList(util.getName(),mesList.get(position).getFromUser());
+			    //messageDB.updateMsg(mesList.get(position).getFromUser(),util.getName());
+			   
 				context.startActivity(startChat);
-				
 				mesList=null;
 				Toast.makeText(context, "点击事件", 0).show();
-				
 			}
 		});	
 	}
@@ -100,30 +92,8 @@ public class NewsActivity extends Fragment {
 		// TODO Auto-generated method stub
 		//emps=new ArrayList<Mes>();
 		
-		if(mesList==null){
-			getMesListFromSqlite();
-			
-		}else{
-			messageDB.saveNesList(util.getName() ,mesList);
-			
-			for(int i=0;i<mesList.size();i++){
-				List<ChatMsgEntity> contents=mesList.get(i).getContents();
-				//ChatMsgEntity entity=new ChatMsgEntity();
-				for (ChatMsgEntity entity : contents) {
-					if(!entity.isRead()){
-					//未读消息查看后，存入本地数据库
-						messageDB.saveMsg(util.getName(), entity);
-					}
-				}
-				
-			}
-	
-			mesList=null;
-			getMesListFromSqlite();
-		}
-			
+		mesList =messageDB.getMesList(util.getName());
 		
-			
 			//List<User> emps=ContactActivity.getEmps();
 		/*	for (String username: fromUsers) {
 				ChatMsgEntity entity=messageDB.getLastMsg(username);
@@ -158,24 +128,8 @@ public class NewsActivity extends Fragment {
 			newsAdapter=new NewsListViewAdapter(this.getActivity(),mesList,mImageDownLoader,listview);
 			newsAdapter.HeadHeight=height;
 			listview.setAdapter(newsAdapter);
-			
-		
 	}
-	private void getMesListFromSqlite() {
-		mesList=new ArrayList<MesList>();
-		mesList =messageDB.getMesList(util.getName());
-		//如果有历史聊天记录，则取出
-		/*List<String> fromUsers=messageDB.getTableNames();
-		
-		for(String username: fromUsers){
-			System.out.println(username);
-			if(username.endsWith("_list")){
-				
-			}
-		
-		}*/
-		
-	}
+	
 	private void getScreen() {
 		// TODO Auto-generated method stub
 		//获取屏幕真是高宽

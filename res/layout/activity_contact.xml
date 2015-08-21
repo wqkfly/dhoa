@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <RelativeLayout 
-     xmlns:android="http://schemas.android.com/apk/res/android"
-     android:layout_width="fill_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="#FFFFFF"
-    android:id="@+id/contact_activity"
+
     >
 
 <LinearLayout
@@ -12,6 +12,7 @@
     android:layout_height="fill_parent"
     android:orientation="vertical" 
     android:background="#FFFFFF"
+    android:id="@+id/contact_activity"
     > 
        
     <!--自定义试图上面的xmlns需要指向R.java所在的文件夹--> 
@@ -39,11 +40,12 @@
         android:visibility="gone" 
         android:layout_marginLeft="17.5dp"  
         android:background="@drawable/back_a"/>
-    <ImageView  
+    <ImageButton
         android:id="@+id/c_title_theme"     
         android:layout_width="38dp"
         android:layout_height="38dp"     
         android:layout_alignParentRight="true"
+
         android:layout_centerVertical="true"  
         android:layout_marginRight="17.5dp"  
         android:background="@drawable/main_menu"/>     
@@ -68,25 +70,15 @@
 	    android:layout_gravity="center_horizontal"
 	    android:weightSum="1080"
 	    >
-    <LinearLayout android:layout_width="0dp" android:layout_height="fill_parent" android:layout_weight="145"></LinearLayout>
+    <LinearLayout android:layout_width="0dp" android:layout_height="fill_parent" android:layout_weight="155"></LinearLayout>
 	    <LinearLayout 
 	       	android:id="@+id/c_button_layout"
 	        android:layout_width="0dp" 
 	        android:layout_height="fill_parent" 
-	        android:layout_weight="790"
+	        android:layout_weight="770"
 	       	android:padding="4.5dp"
 	       	android:background="@drawable/c_group_n"
 	        >
-	    <TextView 
-	        android:id="@+id/c_button_contact"
-	        android:layout_width="0dp"
-	        android:layout_height="fill_parent"
-	        android:layout_weight="1"
-	        android:gravity="center"
-	        android:text="联系人"
-	        android:textColor="#ffffffff"
-	        android:background="@drawable/c_group_a"
-	        />
 	    <TextView 
 	        android:id="@+id/c_button_group"
 	        android:layout_width="0dp"
@@ -94,7 +86,8 @@
 	        android:layout_weight="1"
 	        android:gravity="center"
 	        android:textColor="#ffffffff"
-	        android:text="群组"
+	        android:text="群    组"
+	        android:background="@drawable/c_group_a"
 	        />
 	   <TextView 
 	        android:id="@+id/c_button_area"
@@ -102,11 +95,11 @@
 	        android:layout_height="fill_parent"
 	        android:layout_weight="1"
 	        android:gravity="center"
-	        android:text="地域"
+	        android:text="地    域"
 	        android:textColor="#ffffffff"
 	        />
 	    </LinearLayout>
-	        <LinearLayout android:layout_width="0dp" android:layout_height="fill_parent" android:layout_weight="145"></LinearLayout>
+	        <LinearLayout android:layout_width="0dp" android:layout_height="fill_parent" android:layout_weight="155"></LinearLayout>
 	</LinearLayout>
 	<LinearLayout 
 	    android:id="@+id/c_ContactAndGroup_layout"
@@ -118,8 +111,6 @@
 	     android:layout_width="0dp"
 	     android:layout_height="fill_parent"
 	     android:layout_weight="131"
-
-	     android:visibility="gone"
 	     android:layout_marginLeft="10dp"
 	     android:id="@+id/contact_left_layout"
 	     >
@@ -179,7 +170,6 @@
 	        android:layout_width="fill_parent"
 	        android:layout_height="0dp"
 	        android:layout_weight="794"
-	        android:background="@drawable/c_map"
 	        android:layout_marginLeft="18dp"
 	        android:layout_marginRight="45dp"
 	        android:layout_marginTop="34dp"
@@ -255,7 +245,7 @@
 	        android:layout_width="fill_parent"
 	        android:layout_height="0dp"
 	        android:layout_weight="543"
-	        android:background="@drawable/c_text"
+	
 	        android:id="@+id/c_map_state"
 	        />
 

@@ -2,6 +2,7 @@ package com.dhcc.entity;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
 //{'fromUser':'wangqiankun','cfromUser':'王乾坤','toUser':'lulin','content':'啦啦啦','time':'上午12:20','counts':'5','isRead':'1'}
 
@@ -15,15 +16,15 @@ public class MesList implements Serializable{
 	private String toUser;
 	private String lastCotent;
 	private String time;
-	private int counts;
+	private Map<String,Integer> unReadNums;
+	//private int counts;
 	private List<ChatMsgEntity> contents;//所有未读信息
 	private int isRead;
 	
 	
-	public MesList(String fromUser2, int counts2, String date, int isRead2,
-			String lastContent) {
+	public MesList(String fromUser2, String date, int isRead2,String lastContent) {
 		this.fromUser=fromUser2;
-		this.counts=counts2;
+		
 		this.time=date;
 		this.isRead=isRead2;
 		this.lastCotent=lastContent;
@@ -59,12 +60,7 @@ public class MesList implements Serializable{
 	public void setTime(String time) {
 		this.time = time;
 	}
-	public int getCounts() {
-		return counts;
-	}
-	public void setCounts(int counts) {
-		this.counts = counts;
-	}
+	
 	public int getIsRead() {
 		return isRead;
 	}
@@ -76,6 +72,12 @@ public class MesList implements Serializable{
 	}
 	public void setContents(List<ChatMsgEntity> contents) {
 		this.contents = contents;
+	}
+	public Map<String, Integer> getUnReadNums() {
+		return unReadNums;
+	}
+	public void setUnReadNums(Map<String, Integer> unReadNums) {
+		this.unReadNums = unReadNums;
 	}
 	
 	

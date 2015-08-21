@@ -6,6 +6,9 @@ package com.dhcc.activity;
 
 
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 import org.ddpush.client.udp.Params;
 import org.ddpush.client.udp.service.OnlineService;
@@ -37,21 +40,20 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
-import com.dhcc.entity.User;
 import com.dhcc.client.Client;
 import com.dhcc.client.ClientOutputThread;
 import com.dhcc.entity.ChatMsgEntity;
 import com.dhcc.entity.LoginUser;
-
 import com.dhcc.entity.MesList;
 import com.dhcc.entity.TranObject;
 import com.dhcc.entity.TranObjectType;
+import com.dhcc.entity.User;
 import com.dhcc.mobile.mobilecom;
 import com.dhcc.util.Constants;
 import com.dhcc.util.DialogFactory;
 import com.dhcc.util.DoSharePre;
 import com.dhcc.util.Encode;
-
+import com.dhcc.util.MessageDB;
 import com.dhcc.util.SharePreferenceUtil;
 import com.dhcc.util.UserDB;
 
@@ -62,7 +64,7 @@ public class LoginActivity extends MyActivity implements OnClickListener {
 	private ToggleButton save;
 	private EditText l_name;
 	private EditText l_password;
-	private ImageView l_setNet_b;
+	private View l_setNet_b;
 	private TextView regist;
 	private TextView lostPs;
 	private int v_height=800;
@@ -75,8 +77,10 @@ public class LoginActivity extends MyActivity implements OnClickListener {
 	Context context=this;
 	private SharePreferenceUtil util;
 	private SharePreferenceUtil util_port;
+	private SharePreferenceUtil util_count;
 	private SharedPreferences.Editor editor;
 	private static ArrayList<MesList>	unReadMessages;
+	private MessageDB messageDB;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -91,8 +95,9 @@ public class LoginActivity extends MyActivity implements OnClickListener {
         a_height = metric.heightPixels;  // 屏幕高度（像素）
         density = metric.density;
         util= new SharePreferenceUtil(LoginActivity.this, Constants.SAVE_USER);
+        util_count=new SharePreferenceUtil(LoginActivity.this, Constants.COUNTS);
         util_port= new SharePreferenceUtil(LoginActivity.this, Constants.IP_PORT);
-
+        messageDB=new MessageDB(context);
 		LoginUser.webUrl="http://"+util_port.getIp()+":"+util_port.getTPort()+"/"+util_port.getServer()+"/";//第一个参数为要获取的值的Key，第二个参数为没有Key对应的值返回的默认值。
 		
 		Toast.makeText(this, LoginUser.webUrl, 0).show();
@@ -150,7 +155,7 @@ public class LoginActivity extends MyActivity implements OnClickListener {
 		MarginLayoutParams prams=(MarginLayoutParams)l_setNet_b.getLayoutParams();
 		prams.height=(int) (50*density);
 		prams.width=(int) (50*density);
-		prams.leftMargin=393*a_width/v_width-29;
+		prams.rightMargin=38*a_width/v_width;
 		prams.topMargin=412*a_height/v_height;
 		l_setNet_b.setLayoutParams(prams);
 	}
@@ -162,7 +167,7 @@ public class LoginActivity extends MyActivity implements OnClickListener {
 		l_password=(EditText) findViewById(R.id.login_edit_ps);
 		login=(Button) findViewById(R.id.login_but);
 		save=(ToggleButton) findViewById(R.id.login_save_logo);
-		l_setNet_b=(ImageView) findViewById(R.id.l_setnet);
+		l_setNet_b= findViewById(R.id.l_setnet);
 		regist=(TextView) findViewById(R.id.login_text_register);
 		lostPs=(TextView) findViewById(R.id.login_text_f_ps);
 	}
@@ -212,6 +217,28 @@ public class LoginActivity extends MyActivity implements OnClickListener {
 			switch(msg.getType()){
 			case MESSAGELIST:
 				ArrayList<MesList>	messages=(ArrayList<MesList>) msg.getObject();
+				
+				//messageDB.saveNesList(util.getName() ,messages);
+				
+				for(int i=0;i<messages.size();i++){
+					List<ChatMsgEntity> contents=messages.get(i).getContents();
+					
+					Iterator iter = messages.get(i).getUnReadNums().entrySet().iterator();
+					while (iter.hasNext()) {
+						Map.Entry entry = (Map.Entry) iter.next();
+						String key = (String) entry.getKey();
+						Integer num = (Integer) entry.getValue();
+						util_count.setNum(key, num);
+					}
+					for (ChatMsgEntity entity : contents) {
+						if(!entity.isRead()){
+						//未读消息查看后，存入本地数据库
+							//entity.setNum(counts);
+							messageDB.saveUnReadMsg(entity.getFromUser(),util.getName(), entity);
+						}
+					}
+					
+				}
 				unReadMessages=messages;
 				/*for (MesList mes : messages) {
 					ChatMsgEntity entity=new ChatMsgEntity();
@@ -352,7 +379,11 @@ public class LoginActivity extends MyActivity implements OnClickListener {
 		case R.id.login_but:
 			String accounts = l_name.getText().toString();
 			String password = l_password.getText().toString();
-			
+			if(save.isChecked()){
+				util.setName(l_name.getText().toString());
+				util.setPasswd(l_password.getText().toString());
+				util.setIsSave(true);
+			}
 			if (accounts.length() == 0 || password.length() == 0) {
 				DialogFactory.ToastDialog(context, "登录", "亲！帐号或密码不能为空哦");
 			} else{
@@ -380,13 +411,11 @@ public class LoginActivity extends MyActivity implements OnClickListener {
 			Intent intent = new Intent();
 	        intent.setClass(LoginActivity.this, NetSetActivity.class);
 	        startActivity(intent);
-	        finish();
 			break;
 		case R.id.login_text_register:
 			Intent intent1 = new Intent();
 	        intent1.setClass(LoginActivity.this, RegisterActivity.class);
 	        startActivity(intent1);
-	        finish();
 			break;
 		case R.id.login_text_f_ps:
 			Toast.makeText(this, "忘记密码", 0).show();

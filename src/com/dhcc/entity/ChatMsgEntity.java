@@ -21,12 +21,12 @@ public class ChatMsgEntity implements Serializable{
 	private boolean isComMeg = true;// 是否为收到的消息
 	private boolean isRead;
 	private int type;//1,普通文本消息，2，图片3，语音，4，视频
+	private int num;
 	public ChatMsgEntity() {
 
 	}
 
-	public ChatMsgEntity(String fromUser,String toUser, String date, String text, 
-			boolean isComMsg) {
+	public ChatMsgEntity(String fromUser,String toUser, String date, String text, boolean isComMsg) {
 		super();
 		this.fromUser = fromUser;
 		this.date = date;
@@ -92,6 +92,14 @@ public class ChatMsgEntity implements Serializable{
 
 	public void setRead(boolean isRead) {
 		this.isRead = isRead;
+	}
+
+	public int getNum() {
+		return num;
+	}
+
+	public void setNum(int num) {
+		this.num = num;
 	}
 	
 	
